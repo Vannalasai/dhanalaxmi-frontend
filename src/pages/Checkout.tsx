@@ -128,14 +128,17 @@ const Checkout: React.FC = () => {
       const finalAmount = totalPrice + shippingFee;
 
       // 1. బ్యాకెండ్ నుండి Razorpay ఆర్డర్‌ను సృష్టించండి
-      const orderRes = await fetch("http://localhost:5000/api/orders/create", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ amount: finalAmount }),
-      });
+      const orderRes = await fetch(
+        "https://dhanalaxmi-backend.onrender.com/api/orders/create",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ amount: finalAmount }),
+        }
+      );
 
       if (!orderRes.ok) throw new Error("Failed to create Razorpay order.");
       const { data: orderData } = await orderRes.json();
@@ -151,7 +154,7 @@ const Checkout: React.FC = () => {
         handler: async (response: any) => {
           // 3. పేమెంట్‌ను బ్యాకెండ్‌లో వెరిఫై చేయండి
           const verificationRes = await fetch(
-            "http://localhost:5000/api/orders/verify",
+            "https://dhanalaxmi-backend.onrender.com/api/orders/verify",
             {
               method: "POST",
               headers: {
