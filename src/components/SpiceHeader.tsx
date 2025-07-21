@@ -137,18 +137,16 @@ const SpiceHeader: React.FC = () => {
           </div>
 
           {/* Right-side Icons */}
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 sm:space-x-4">
+            {/* Desktop Icons */}
             <div className="hidden md:flex items-center space-x-4">
               {isAuthenticated ? (
                 <>
                   <Link to="/wishlist" className="relative">
                     <Heart className="h-6 w-6" />
-                  </Link>
-                  <Link to="/cart" className="relative">
-                    <ShoppingCart className="h-6 w-6" />
-                    {itemCount > 0 && (
+                    {wishlistItems.length > 0 && (
                       <span className="absolute -top-2 -right-2 bg-secondary text-secondary-foreground text-xs rounded-full h-5 w-5 flex items-center justify-center font-semibold">
-                        {itemCount}
+                        {wishlistItems.length}
                       </span>
                     )}
                   </Link>
@@ -196,6 +194,16 @@ const SpiceHeader: React.FC = () => {
                 </Link>
               )}
             </div>
+
+            {/* Cart Icon (Visible on all screen sizes) */}
+            <Link to="/cart" className="relative">
+              <ShoppingCart className="h-6 w-6" />
+              {itemCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-secondary text-secondary-foreground text-xs rounded-full h-5 w-5 flex items-center justify-center font-semibold">
+                  {itemCount}
+                </span>
+              )}
+            </Link>
 
             {/* Mobile Icons */}
             <Button
@@ -245,12 +253,12 @@ const SpiceHeader: React.FC = () => {
         )}
 
         {/* Desktop Navigation Links (second row) */}
-        <nav className="hidden md:flex justify-start space-x-8 py-4 px-4 border-t border-white/20">
+        <nav className="hidden md:flex items-center justify-center space-x-8 py-2 border-t border-white/20">
           {mainNavLinks.map((link) => (
             <Link
               key={link.href}
               to={link.href}
-              className="hover:text-secondary transition-colors text-sm lg:text-md font-medium"
+              className="hover:text-secondary transition-colors text-sm font-medium"
             >
               {link.label}
             </Link>
